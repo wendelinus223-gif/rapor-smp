@@ -84,6 +84,12 @@ let currentWaliKelas = sessionStorage.getItem('RAPOR_WALI_KELAS') || null;
 // Pointer 'db' mengarah pada sekolah yang sedang login
 let db = (currentNpsn && multiDb.schools[currentNpsn]) ? multiDb.schools[currentNpsn] : null;
 
+// Pastikan db.siswa dan db.nilai terdefinisi jika db ada
+if (db) {
+    if (!db.siswa) db.siswa = [];
+    if (!db.nilai) db.nilai = [];
+}
+
 // === FIREBASE REALTIME SINKRONISASI ===
 if (typeof realDB !== 'undefined') {
     realDB.ref('multiDb').on('value', (snapshot) => {
@@ -93,6 +99,8 @@ if (typeof realDB !== 'undefined') {
             localStorage.setItem('RAPOR_SMP_MULTI_DB', JSON.stringify(multiDb));
             if (currentNpsn && multiDb.schools[currentNpsn]) {
                 db = multiDb.schools[currentNpsn];
+                if (!db.siswa) db.siswa = [];
+                if (!db.nilai) db.nilai = [];
             }
             if (sessionStorage.getItem('RAPOR_LOGGED_IN') === 'true') {
                 checkAuth();
@@ -132,6 +140,8 @@ function checkAuth() {
     const loggedIn = sessionStorage.getItem('RAPOR_LOGGED_IN');
     if (loggedIn === 'true' && currentNpsn && multiDb.schools[currentNpsn]) {
         db = multiDb.schools[currentNpsn];
+        if (!db.siswa) db.siswa = [];
+        if (!db.nilai) db.nilai = [];
         
         currentUserRole = sessionStorage.getItem('RAPOR_USER_ROLE') || 'admin';
         currentWaliKelas = sessionStorage.getItem('RAPOR_WALI_KELAS') || null;
@@ -251,6 +261,8 @@ document.getElementById('form-login')?.addEventListener('submit', (e) => {
                 sessionStorage.setItem('RAPOR_LOGGED_IN', 'true');
                 
                 db = multiDb.schools[currentNpsn];
+                if (!db.siswa) db.siswa = [];
+                if (!db.nilai) db.nilai = [];
                 checkAuth();
                 renderView();
                 return;
@@ -287,6 +299,8 @@ document.getElementById('form-login')?.addEventListener('submit', (e) => {
                             sessionStorage.setItem('RAPOR_LOGGED_IN', 'true');
 
                             db = multiDb.schools[currentNpsn];
+                            if (!db.siswa) db.siswa = [];
+                            if (!db.nilai) db.nilai = [];
                             checkAuth();
                             renderView();
                         }
@@ -413,6 +427,9 @@ async function loadView(fileName) {
 
 async function renderView() {
     if (!db) return;
+    if (!db.siswa) db.siswa = [];
+    if (!db.nilai) db.nilai = [];
+
     const container = document.getElementById('content-container');
     if (!container) return;
 
@@ -456,6 +473,8 @@ async function renderView() {
 
 function initDashboardData() {
     if (!db) return;
+    if (!db.siswa) db.siswa = [];
+
     const elTotal = document.getElementById('dash-total-siswa');
     const elSekolah = document.getElementById('dash-nama-sekolah');
     const elNpsn = document.getElementById('dash-npsn-sekolah');
@@ -537,6 +556,8 @@ function initDashboardData() {
 
 function initSampulData() {
     if (!db) return;
+    if (!db.siswa) db.siswa = [];
+
     const targetSiswa = currentUserRole === 'wali' 
         ? db.siswa.filter(s => s.kelas === currentWaliKelas)
         : db.siswa;
@@ -667,7 +688,9 @@ function printIdentitasSekolah() {
 
 function initSiswaTable() {
     if (!db) return;
-    db.siswa.sort((a, b) => a.nama.localeCompare(b.nama));
+    if (!db.siswa) db.siswa = [];
+    
+    db.siswa.sort((a, b) => (a.nama || '').localeCompare(b.nama || ''));
 
     if (currentUserRole === 'wali') {
         selectedKelasFilter = currentWaliKelas;
@@ -815,6 +838,8 @@ function initWaliTable() {
 
 function initCapaianData() {
     if (!db) return;
+    if (!db.siswa) db.siswa = [];
+
     if (currentUserRole === 'wali') {
         selectedKelasFilter = currentWaliKelas;
     }
@@ -865,6 +890,9 @@ function setKelasFilter(val) {
 }
 
 function openSiswaModal(idx) {
+    if (!db) return;
+    if (!db.siswa) db.siswa = [];
+
     const modal = document.getElementById('siswa-modal');
     if (!modal) return;
     modal.classList.remove('hidden');
@@ -933,9 +961,18 @@ function closeSiswaModal() {
     if (modal) modal.classList.add('hidden');
 }
 
+// === FUNGSI PERBAIKAN: MEMASTIKAN DB & SISWA TERLEBIH DAHULU SUDAH TERSEDIA ===
 function saveFullSiswa(e) {
     if (e && e.preventDefault) e.preventDefault();
     try {
+        if (!db) {
+            alert("Database sekolah belum terhubung!");
+            return;
+        }
+        if (!db.siswa) {
+            db.siswa = [];
+        }
+
         const idxInput = document.getElementById('edit-siswa-index');
         const idx = idxInput ? parseInt(idxInput.value) : -1;
         
@@ -992,6 +1029,7 @@ function saveFullSiswa(e) {
 }
 
 function deleteSiswa(idx) {
+    if (!db || !db.siswa) return;
     if (currentUserRole === 'wali' && db.siswa[idx] && db.siswa[idx].kelas !== currentWaliKelas) {
         alert("Anda tidak dapat menghapus siswa kelas lain.");
         return;
@@ -1080,6 +1118,9 @@ function updateRowCalc(mapelKey) {
 }
 
 function loadRaporEditor() {
+    if (!db) return '';
+    if (!db.siswa) db.siswa = [];
+
     const targetSiswaList = currentUserRole === 'wali' 
         ? db.siswa.filter(s => s.kelas === currentWaliKelas)
         : db.siswa;
@@ -1334,6 +1375,9 @@ function loadRaporEditor() {
 }
 
 function saveRaporNilai() {
+    if (!db) return;
+    if (!db.siswa) db.siswa = [];
+
     const targetSiswaList = currentUserRole === 'wali' 
         ? db.siswa.filter(s => s.kelas === currentWaliKelas)
         : db.siswa;
@@ -1401,6 +1445,8 @@ function saveRaporNilai() {
 }
 
 function resetRaporNilai() {
+    if (!db || !db.siswa) return;
+
     const targetSiswaList = currentUserRole === 'wali' 
         ? db.siswa.filter(s => s.kelas === currentWaliKelas)
         : db.siswa;
@@ -1429,8 +1475,14 @@ function printRaporF4() {
         alert("Pencetakan Rapor dialokasikan khusus untuk Akun Admin Sekolah.");
         return;
     }
+    if (!db || !db.siswa) return;
 
     const siswa = db.siswa[currentSiswaIndex] || db.siswa[0];
+    if (!siswa) {
+        alert("Data siswa belum tersedia.");
+        return;
+    }
+
     const wali = db.wali.find(w => w.kelas === siswa.kelas) || { nama: '................', nip: '................' };
     const nilaiObj = (db.nilai && db.nilai.find(n => n.nisn === siswa.nisn)) || { mapel: {}, ekstra: [], absensi: {}, catatan: '', keputusan: 'Naik Kelas' };
     const isGenap = db.sekolah.semester.includes('2') || db.sekolah.semester.toLowerCase().includes('genap');
@@ -1643,8 +1695,10 @@ function restoreJSON(e) {
     reader.onload = function(evt) {
         try {
             const data = JSON.parse(evt.target.result);
-            if (data.sekolah && data.siswa) {
+            if (data.sekolah) {
                 db = data;
+                if (!db.siswa) db.siswa = [];
+                if (!db.nilai) db.nilai = [];
                 saveDB();
                 alert("Data Rapor SMP berhasil dipulihkan secara penuh!");
                 location.reload();
@@ -1761,6 +1815,9 @@ function uploadFormBiodataCSV(event) {
     const file = event.target.files[0];
     if (!file) return;
 
+    if (!db) return;
+    if (!db.siswa) db.siswa = [];
+
     const reader = new FileReader();
     reader.onload = function(e) {
         const text = e.target.result;
@@ -1858,11 +1915,11 @@ function downloadFormNilaiCSV() {
     const headerLine = ["NISN", "Nama Siswa", "Kelas", ...subHeaders].join(",");
     
     const rows = db.siswa.map(s => {
-        const nilaiObj = db.nilai.find(n => n.nisn === s.nisn) || { mapel: {} };
+        const nilaiObj = db.nilai ? db.nilai.find(n => n.nisn === s.nisn) : null;
         const mapelVals = [];
         
         mapelHeaders.forEach(m => {
-            const item = nilaiObj.mapel[m] || { uh1: '', uh2: '', uh3: '', uts: '', uas: '' };
+            const item = (nilaiObj && nilaiObj.mapel && nilaiObj.mapel[m]) ? nilaiObj.mapel[m] : { uh1: '', uh2: '', uh3: '', uts: '', uas: '' };
             mapelVals.push(item.uh1 ?? '', item.uh2 ?? '', item.uh3 ?? '', item.uts ?? '', item.uas ?? '');
         });
 
@@ -1882,6 +1939,9 @@ function downloadFormNilaiCSV() {
 function uploadFormNilaiCSV(event) {
     const file = event.target.files[0];
     if (!file) return;
+
+    if (!db) return;
+    if (!db.nilai) db.nilai = [];
 
     const reader = new FileReader();
     reader.onload = function(e) {
