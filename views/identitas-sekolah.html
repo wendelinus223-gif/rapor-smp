@@ -1,0 +1,77 @@
+<div class="glass-card p-6 rounded-2xl space-y-6">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-700/60 pb-4">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i data-lucide="building-2" class="w-5 h-5 text-blue-400"></i> Identitas Sekolah SMP
+        </h2>
+        <div class="flex items-center gap-3">
+            <button onclick="printIdentitasSekolah()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg">
+                <i data-lucide="printer" class="w-4 h-4"></i> Cetak Identitas Sekolah
+            </button>
+            <button onclick="saveIdentitasSekolah()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg">
+                <i data-lucide="save" class="w-4 h-4"></i> Simpan Data Sekolah
+            </button>
+        </div>
+    </div>
+
+    <form id="form-sekolah" onsubmit="event.preventDefault(); saveIdentitasSekolah();" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Pemerintah Kabupaten / Nama Yayasan</label>
+            <input type="text" id="sek-yayasan" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Nama Sekolah</label>
+            <input type="text" id="sek-nama" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Alamat Sekolah</label>
+            <input type="text" id="sek-alamat" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Kode Pos / Telepon</label>
+            <input type="text" id="sek-kodepos" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Desa / Kelurahan</label>
+            <input type="text" id="sek-desa" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Kecamatan</label>
+            <input type="text" id="sek-kecamatan" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Kabupaten</label>
+            <input type="text" id="sek-kabupaten" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Provinsi</label>
+            <input type="text" id="sek-provinsi" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-blue-400 mb-1">Logo URL (Terkonek ke Sampul & Kop Rapor)</label>
+            <input type="text" id="sek-logo" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-blue-500 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Tahun Ajaran</label>
+            <input type="text" id="sek-tahun" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Semester</label>
+            <select id="sek-semester" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+                <option value="1 (Ganjil)">1 (Ganjil)</option>
+                <option value="2 (Genap)">2 (Genap)</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Nama Kepala Sekolah</label>
+            <input type="text" id="sek-kepsek" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">NIP Kepala Sekolah</label>
+            <input type="text" id="sek-nip" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Tempat, Tanggal Cetak</label>
+            <input type="text" id="sek-tempat-cetak" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white">
+        </div>
+    </form>
+</div>

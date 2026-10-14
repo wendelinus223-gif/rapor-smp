@@ -1,0 +1,39 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center glass-card p-4 rounded-2xl">
+        <div>
+            <h2 class="text-lg font-bold text-white">Sampul Rapor Peserta Didik SMP</h2>
+            <p class="text-xs text-slate-400">Cetak Kertas Ukuran F4 Margin Narrow, Times New Roman</p>
+        </div>
+        <button onclick="printSampulF4()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg">
+            <i data-lucide="printer" class="w-4 h-4"></i> Cetak Sampul (F4)
+        </button>
+    </div>
+
+    <div id="cover-printable" class="printable-sheet glass-card p-10 rounded-2xl max-w-[215mm] h-[300mm] mx-auto text-black bg-white font-times text-center shadow-2xl border border-slate-700 flex flex-col justify-between items-center">
+        <div class="pt-4">
+            <h1 class="text-3xl font-bold tracking-wider uppercase">LAPORAN</h1>
+            <h2 class="text-xl font-bold tracking-wide uppercase mt-2">HASIL PENCAPAIAN KOMPETENSI PESERTA DIDIK</h2>
+            <h2 class="text-2xl font-bold tracking-wide uppercase mt-1">SEKOLAH MENENGAH PERTAMA (SMP)</h2>
+        </div>
+
+        <div class="flex flex-col items-center justify-center w-full my-auto">
+            <img id="sampul-logo" src="" alt="Logo Sekolah" class="h-52 w-auto object-contain mb-10" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_Tut_Wuri_Handayani.png'">
+            
+            <div class="space-y-3 text-center w-full">
+                <p class="text-lg">Nama Peserta Didik :</p>
+                <p class="font-bold text-2xl uppercase tracking-wide leading-tight" id="sampul-nama-siswa">................</p>
+
+                <div class="pt-4">
+                    <p class="text-lg">NIS / NISN :</p>
+                    <p class="font-bold text-xl leading-tight" id="sampul-nis-nisn">.... / ....</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-2 font-bold uppercase w-full pb-4">
+            <p class="text-base tracking-wide" id="sampul-yayasan">-</p>
+            <p class="text-2xl tracking-wide font-black" id="sampul-sekolah">-</p>
+            <p class="pt-3 text-base font-bold" id="sampul-tahun">-</p>
+        </div>
+    </div>
+</div>

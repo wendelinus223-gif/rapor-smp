@@ -1,0 +1,49 @@
+<div class="space-y-6 font-sans">
+    <div class="p-6 rounded-2xl glass-card relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="space-y-2 z-10">
+            <h2 class="text-2xl font-bold text-white tracking-wide">Selamat Datang di RAPOR SMP</h2>
+            <p class="text-slate-300 text-sm max-w-2xl">Sistem Informasi Hasil Belajar Peserta Didik SMP dengan standar Kelompok A (Mata Pelajaran Utama), Kelompok B (Muatan Lokal & Keterampilan), Kelompok C (Ekstrakurikuler), Ketidakhadiran, Catatan Wali Kelas, serta Keputusan Naik/Tinggal Kelas/Lulus.</p>
+        </div>
+        <button onclick="switchTab('capaian')" class="z-10 px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl shadow-lg transition-all flex items-center gap-2 whitespace-nowrap">
+            <i data-lucide="edit-3" class="w-4 h-4"></i> Input Nilai & Cetak
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card colorful-card-1 p-5 rounded-2xl">
+            <span class="text-xs font-bold text-blue-400 uppercase">Total Peserta Didik</span>
+            <p class="text-3xl font-black text-white mt-1" id="dash-total-siswa">0 <span class="text-xs font-normal text-slate-400">Siswa</span></p>
+        </div>
+        <div class="glass-card colorful-card-2 p-5 rounded-2xl">
+            <span class="text-xs font-bold text-emerald-400 uppercase">Identitas Sekolah</span>
+            <p class="text-lg font-bold text-white truncate mt-1" id="dash-nama-sekolah">-</p>
+            <p class="text-xs text-slate-400 mt-1">NPSN: <span id="dash-npsn-sekolah" class="font-bold text-slate-200">-</span></p>
+        </div>
+        <div class="glass-card colorful-card-3 p-5 rounded-2xl">
+            <span class="text-xs font-bold text-amber-400 uppercase">Tahun Ajaran</span>
+            <p class="text-2xl font-bold text-white mt-1" id="dash-tahun-ajaran">-</p>
+            <p class="text-xs text-slate-400" id="dash-semester">Semester: -</p>
+        </div>
+    </div>
+
+    <!-- PANEL STATISTIK NILAI & KELENGKAPAN -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-card p-5 rounded-2xl space-y-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="bar-chart-2" class="w-4 h-4 text-blue-400"></i> Distribusi Predikat Nilai Seluruh Siswa
+            </h3>
+            <div id="dash-stat-predikat" class="space-y-2">
+                <!-- Bar statistik akan diisi otomatis dari JS -->
+            </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl space-y-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Status Kelengkapan Input Rapor
+            </h3>
+            <div id="dash-stat-kelengkapan" class="space-y-3">
+                <!-- Progress bar kelengkapan akan diisi dari JS -->
+            </div>
+        </div>
+    </div>
+</div>

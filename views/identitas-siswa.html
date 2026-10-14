@@ -1,0 +1,59 @@
+<div class="glass-card p-6 rounded-2xl space-y-6">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i data-lucide="users" class="w-5 h-5 text-indigo-400"></i> Identitas Peserta Didik SMP
+        </h2>
+
+        <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-700">
+                <span class="text-xs text-slate-400 font-medium">Filter Kelas:</span>
+                <select id="filter-kelas-siswa" onchange="setKelasFilter(this.value)" class="bg-transparent text-xs font-bold text-white focus:outline-none">
+                    <option value="SEMUA">Semua Kelas (VII-IX)</option>
+                    <option value="VII">Kelas VII</option>
+                    <option value="VIII">Kelas VIII</option>
+                    <option value="IX">Kelas IX</option>
+                </select>
+            </div>
+            <button onclick="openSiswaModal(-1)" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl flex items-center gap-2">
+                <i data-lucide="user-plus" class="w-4 h-4"></i> Tambah Siswa Baru
+            </button>
+        </div>
+    </div>
+
+    <div class="p-4 bg-slate-900/90 rounded-2xl border border-indigo-500/30 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <p class="text-xs font-bold text-indigo-400 flex items-center gap-2">
+                <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Form Penginputan Biodata Siswa Kolektif (Excel/CSV)
+            </p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Unduh template biodata siswa lengkap, isi data di Excel, lalu upload kembali untuk menyimpan secara otomatis.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button onclick="downloadFormBiodataCSV()" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-md">
+                <i data-lucide="download" class="w-4 h-4"></i> Unduh Form Biodata
+            </button>
+            <label class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 cursor-pointer shadow-md">
+                <i data-lucide="upload" class="w-4 h-4"></i> Upload Form Biodata
+                <input type="file" id="upload-biodata-csv" accept=".csv" class="hidden" onchange="uploadFormBiodataCSV(event)">
+            </label>
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-900/80 text-xs text-slate-400 uppercase">
+                <tr>
+                    <th class="p-3">No</th>
+                    <th class="p-3">Nama Lengkap</th>
+                    <th class="p-3">NIS / NISN</th>
+                    <th class="p-3">Kelas</th>
+                    <th class="p-3 text-center">Peringkat Kelas</th>
+                    <th class="p-3">L/P</th>
+                    <th class="p-3 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="table-body-siswa" class="divide-y divide-slate-800">
+                <!-- Rendering Dinamis JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
